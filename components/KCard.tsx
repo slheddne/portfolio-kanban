@@ -13,12 +13,11 @@ import {
 
 interface KCardProps {
   id: string;
-  title: string;
   description: string;
   badges: string[];
 }
 
-const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
+const KCard: React.FC<KCardProps> = ({ id, description, badges }) => {
   const [open, setOpen] = useState(false);
 
   const renderBadges = (badges: string[]) => (
@@ -32,14 +31,13 @@ const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <div
-        className='bg-gradient-to-b from-slate-50 shadow-md border-solid border-1 rounded-lg w-96 p-4 cursor-pointer'
+        className='shadow-sm bg-gradient-to-b from-slate-50 dark:from-slate-900/30 border-solid border-2 rounded-lg w-full p-4 cursor-pointer'
         onClick={() => setOpen(true)}
         role='button'
       >
-        <div className='font-bold text-xs text-slate-500'>{id}</div>
-        <div className='text-sm mb-2'>{title}</div>
+        <div className='font-bold text-xs'>{id}</div>
         <div className='text-md'>{description}</div>
         {renderBadges(badges)}
       </div>
@@ -47,7 +45,6 @@ const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           {renderBadges(badges)}
@@ -56,7 +53,7 @@ const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
           </button>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,17 +1,16 @@
-import React from "react";
-import { Sun, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Info } from "lucide-react";
+import ThemeToggler from "./ThemeToggler";
 
 const Header = () => {
   return (
-    <header className='bg-slate-100 p-4 flex justify-between items-center '>
-      <h1 className=' text-2xl text-slate-500 font-bold'>S~E</h1>
+    <header className='bg-slate-100 dark:bg-slate-900 p-4 flex justify-between items-center'>
+      <h1 className='text-xl font-bold'>S~E</h1>
       <div className='flex space-x-4'>
-        <button>
-          <Sun className='size-6' aria-hidden='true' />
-        </button>
-        <button>
-          <Info className='size-6' aria-hidden='true' />
-        </button>
+        <ThemeToggler />
+        <Button size='icon' variant='ghost'>
+          <Info className='size-6' />
+        </Button>
       </div>
     </header>
   );

@@ -3,7 +3,7 @@ import { Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className='p-2 flex flex-col items-center justify-center w-full mt-auto'>
+    <footer className=' flex flex-col items-center justify-center w-full mb-2'>
       <p className='text-xs text-center'>
         Made with ❤️ by Salah-Eddine ET-TALEBY © 2024 - All rights reserved.
       </p>

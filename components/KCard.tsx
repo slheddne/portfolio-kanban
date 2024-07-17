@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 import {
   Dialog,

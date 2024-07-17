@@ -1,6 +1,6 @@
 import React from "react";
-import KCard from "../kcard/page";
-import { Badge } from "../ui/badge";
+import KCard from "@/components/KCard";
+import { Badge } from "@/components/ui/badge";
 
 interface KPanelProps {
   title: string;

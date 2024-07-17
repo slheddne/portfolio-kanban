@@ -1,4 +1,4 @@
-import KPanel from "@/components/kpanel/page";
+import KPanel from "@/components/KPanel";
 
 const cards = [
   {

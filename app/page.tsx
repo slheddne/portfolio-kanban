@@ -2,7 +2,7 @@ import KPanel from "@/components/KPanel";
 
 const cards = [
   {
-    title: "To Do",
+    title: "About me",
     cards: [
       {
         id: "TASK-1",
@@ -25,7 +25,7 @@ const cards = [
     ],
   },
   {
-    title: "In Progress",
+    title: "Education",
     cards: [
       {
         id: "TASK-4",
@@ -48,7 +48,7 @@ const cards = [
     ],
   },
   {
-    title: "Done",
+    title: "Work experience",
     cards: [
       {
         id: "TASK-7",
@@ -59,7 +59,7 @@ const cards = [
     ],
   },
   {
-    title: "Review",
+    title: "Skills",
     cards: [
       {
         id: "TASK-8",
@@ -79,7 +79,7 @@ const cards = [
 
 export default function Home() {
   return (
-    <div className='flex h-screen justify-center items-center gap-8 '>
+    <div className='flex justify-center mt-10 gap-8'>
       {cards.map((card, index) => (
         <KPanel key={index} title={card.title} cards={card.cards} />
       ))}

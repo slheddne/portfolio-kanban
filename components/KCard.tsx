@@ -35,7 +35,7 @@ const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
   return (
     <>
       <div
-        className='shadow-sm bg-gradient-to-b from-slate-50 dark:from-slate-900/30 border-solid border-2 rounded-lg w-full p-4 cursor-pointer'
+        className='shadow-sm bg-gradient-to-b from-slate-50 dark:from-slate-900/30 border-solid border-2 rounded-lg w-full p-3 cursor-pointer'
         onClick={() => setOpen(true)}
         role='button'
       >

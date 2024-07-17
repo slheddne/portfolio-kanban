@@ -4,7 +4,7 @@ import ThemeToggler from "./ThemeToggler";
 
 const Header = () => {
   return (
-    <header className='h-12 bg-slate-300/50 dark:bg-slate-800 p-4 flex justify-between items-center'>
+    <header className='h-12  p-4 flex justify-between items-center'>
       <h1 className='text-xl font-bold'>S~E</h1>
       <div className='flex space-x-4'>
         <ThemeToggler />

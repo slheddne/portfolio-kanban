@@ -7,7 +7,7 @@ const cards = [
       {
         id: "ABT-1",
         title: "Name",
-        description: "My name is Salah-Eddine ET-TALEBY",
+        description: "My name is Salah-Eddine ET-TALEBY.",
       },
       {
         id: "ABT-2",

@@ -10,18 +10,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface KCardProps {
   id: string;
+  title: string;
   description: string;
-  badges: string[];
+  badges?: string[];
 }
 
-const KCard: React.FC<KCardProps> = ({ id, description, badges }) => {
+const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
   const [open, setOpen] = useState(false);
 
   const renderBadges = (badges: string[]) => (
-    <div className='pt-4 space-x-3'>
+    <div className='pt-4 flex flex-wrap gap-2'>
       {badges.map((badge, index) => (
         <Badge key={index} variant='default'>
           {badge}
@@ -38,19 +40,25 @@ const KCard: React.FC<KCardProps> = ({ id, description, badges }) => {
         role='button'
       >
         <div className='font-bold text-xs'>{id}</div>
-        <div className='text-md'>{description}</div>
-        {renderBadges(badges)}
+        <div className='font-semibold text-xs'>{title}</div>
+        <div className='text-sm mt-2'>{description}</div>
+        {badges && renderBadges(badges)}
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent className='w-[95%] rounded-xl'>
           <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          {renderBadges(badges)}
-          <button onClick={() => setOpen(false)} className='mt-4'>
+          {badges && renderBadges(badges)}
+          <Button
+            variant='outline'
+            onClick={() => setOpen(false)}
+            className='mt-4'
+          >
             Fermer
-          </button>
+          </Button>
         </DialogContent>
       </Dialog>
     </>

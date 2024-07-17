@@ -6,14 +6,15 @@ interface KPanelProps {
   title: string;
   cards: {
     id: string;
+    title: string;
     description: string;
-    badges: string[];
+    badges?: string[];
   }[];
 }
 
 const KPanel = ({ title, cards }: KPanelProps) => {
   return (
-    <div className='h-[700px] w-full border-2 rounded-xl bg-slate-100 dark:bg-slate-800/50'>
+    <div className='h-full w-full border-2 rounded-xl bg-slate-100 dark:bg-slate-800/50'>
       <div className='flex flex-row items-center justify-between p-4'>
         <h1 className='font-bold'>{title}</h1>
         <Badge className='h-6' variant='default'>
@@ -26,6 +27,7 @@ const KPanel = ({ title, cards }: KPanelProps) => {
           <KCard
             key={index}
             id={card.id}
+            title={card.title}
             description={card.description}
             badges={card.badges}
           />

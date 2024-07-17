@@ -6,18 +6,19 @@ const cards = [
     cards: [
       {
         id: "ABT-1",
-        description: "My name is Salah-Eddine E.",
-        badges: ["26 y/o", "Toulouse (France)"],
+        title: "Name",
+        description: "My name is Salah-Eddine ET-TALEBY",
       },
       {
         id: "ABT-2",
-        description: "My description",
-        badges: ["Low", "Medium"],
+        title: "Age",
+        description: "I am currently 26 years old.",
       },
       {
-        id: "TASK-3",
-        description: "This is the third task",
-        badges: ["Low", "Medium"],
+        id: "ABT-3",
+        title: "Profession",
+        description: "I am a software engineer.",
+        badges: ["Infotel", "Toulouse", "Full-time", "Full-stack"],
       },
     ],
   },
@@ -25,19 +26,25 @@ const cards = [
     title: "Education",
     cards: [
       {
-        id: "TASK-4",
-        description: "This is the fourth task",
-        badges: ["High", "Critical"],
+        id: "EDU-1",
+        title: "EPSI - Private Engineering school",
+        description:
+          "Master's degree in computer science and IT where I learned to develop softwares and manage projects.",
+        badges: ["2021-2023", "Toulouse", "Work-study program"],
       },
       {
-        id: "TASK-5",
-        description: "This is the fifth task",
-        badges: ["Low", "Medium"],
+        id: "EDU-2",
+        title: "CESI - Private Engineering school",
+        description:
+          "Bachelor's year in computer science where I learned cybersecurity basics and project management.",
+        badges: ["2020", "Toulouse", "Cybersecurity option"],
       },
       {
-        id: "TASK-6",
-        description: "This is the sixth task",
-        badges: ["High", "Critical"],
+        id: "EDU-3",
+        title: "IUT 'A' Paul Sabatier",
+        description:
+          "Professional Bachelor's degreee in software development and quality.",
+        badges: ["2019", "Toulouse"],
       },
     ],
   },
@@ -45,9 +52,32 @@ const cards = [
     title: "Work experience",
     cards: [
       {
-        id: "TASK-7",
-        description: "This is the seventh task",
-        badges: ["Low", "Medium"],
+        id: "WRK-1",
+        title: "Infotel",
+        description:
+          "I joined Infotel in 2021 as a software engineer during my work-study program and I am still working there.",
+        badges: ["2021-Present", "Toulouse", "Full-time", "Full-stack"],
+      },
+      {
+        id: "WRK-2",
+        title: "CESBIO - CNRS",
+        description:
+          "I joined CESBIO in 2020 as a software developer for a 2 months internship. I worked on a project to develop a web application for the laboratory.",
+        badges: [
+          "2020",
+          "Toulouse",
+          "Internship",
+          "Full-stack",
+          "Java",
+          "Android",
+        ],
+      },
+      {
+        id: "WRK-3",
+        title: "ART Informatique",
+        description:
+          "I joined ART Informatique in 2019 as a software developer for a 3 months internship. I worked on a project to develop ERPs for the company and its clients and managed databases.",
+        badges: ["2019", "Carcassonne", "Internship", "Full-stack", "Windev"],
       },
     ],
   },
@@ -55,14 +85,47 @@ const cards = [
     title: "Skills",
     cards: [
       {
-        id: "TASK-8",
-        description: "This is the eighth task",
-        badges: ["High", "Critical"],
+        id: "SKL-1",
+        title: "Frontend",
+        description:
+          "I have a good knowledge in frontend development. Here are some of the technologies I know and use for personal projects or work.",
+        badges: [
+          "React.js",
+          "Next.js",
+          "Vue.js",
+          "Angular",
+          "TypeScript",
+          "Vite",
+          "TailwindCSS",
+          "shadcn/ui",
+        ],
       },
       {
-        id: "TASK-9",
-        description: "This is the ninth task",
-        badges: ["Low", "Medium"],
+        id: "SKL-2",
+        title: "Backend",
+        description:
+          "I am also qualified in backend development. Here are some of the technologies I use in projects.",
+        badges: ["Node.js", "Express.js", "Django REST framework", "Flask"],
+      },
+      {
+        id: "SKL-3",
+        title: "Databases",
+        description: "I have a good knowledge in databases.",
+        badges: ["MongoDB", "PostgreSQL", "MySQL", "SQLite"],
+      },
+      {
+        id: "SKL-4",
+        title: "Others",
+        description: "Here are some other technologies I know.",
+        badges: [
+          "Docker",
+          "Git",
+          "GitHub",
+          "GitLab",
+          "CI/CD",
+          "Jest",
+          "Testing",
+        ],
       },
     ],
   },

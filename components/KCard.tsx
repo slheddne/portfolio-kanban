@@ -57,7 +57,7 @@ const KCard: React.FC<KCardProps> = ({ id, title, description, badges }) => {
             onClick={() => setOpen(false)}
             className='mt-4'
           >
-            Fermer
+            Close
           </Button>
         </DialogContent>
       </Dialog>

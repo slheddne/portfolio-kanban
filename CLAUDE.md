@@ -1,11 +1,13 @@
-# CLAUDE.md - AI Assistant Guide for Portfolio Kanban
+# CLAUDE.md - AI Assistant Guide for Portfolio
 
 ## Project Overview
 
-This is a **Next.js 14 personal portfolio website** for Salah-Eddine ET-TALEBY, a Full-stack Software Engineer. The site uses a Kanban-style card layout to display professional information across four main sections: About Me, Education, Work Experience, and Skills.
+This is a **Next.js 14 personal portfolio website** for Salah-Eddine ET-TALEBY, a Full-stack Software Engineer. The site features a modern single-page design with animated sections showcasing professional experience, education, skills, and contact information.
 
 **Key Characteristics:**
-- Single-page application with interactive card-based UI
+- Modern single-page portfolio with smooth scroll navigation
+- Animated Hero section with gradient effects
+- Glass morphism UI design
 - Dark mode support with system preference detection
 - Responsive design (mobile, tablet, desktop)
 - Static site generation for GitHub Pages deployment
@@ -19,24 +21,28 @@ This is a **Next.js 14 personal portfolio website** for Salah-Eddine ET-TALEBY, 
 | UI Library | React 18 |
 | Styling | Tailwind CSS 3.4.1 |
 | Component Library | shadcn/ui (Radix UI primitives) |
-| Animations | Framer Motion 11.3, CSS animations |
+| Animations | CSS animations, Tailwind animate |
 | Theme | next-themes 0.3.0 |
-| Icons | Lucide React, Radix UI Icons |
+| Icons | Lucide React |
 
 ## Project Structure
 
 ```
 /home/user/portfolio-kanban/
 ├── app/                      # Next.js App Router
-│   ├── page.tsx             # Home page (main grid layout)
+│   ├── page.tsx             # Home page (main sections layout)
 │   ├── layout.tsx           # Root layout (providers, header, footer)
-│   └── globals.css          # Tailwind directives + CSS variables
+│   └── globals.css          # Tailwind directives + CSS variables + custom utilities
 │
 ├── components/              # React components
-│   ├── Header.tsx          # Nav header with theme toggle + info modal
-│   ├── Footer.tsx          # Footer with LinkedIn link
-│   ├── Tab.tsx             # Card container component
-│   ├── Card.tsx            # Individual portfolio card with modal
+│   ├── Header.tsx          # Fixed nav header with smooth scroll navigation
+│   ├── Footer.tsx          # Footer with social links + back-to-top
+│   ├── Hero.tsx            # Animated hero section with CTA
+│   ├── Section.tsx         # Reusable section wrapper with animations
+│   ├── ExperienceCard.tsx  # Work experience timeline card
+│   ├── EducationCard.tsx   # Education card component
+│   ├── SkillCard.tsx       # Skills category card with icons
+│   ├── ContactSection.tsx  # Contact information section
 │   ├── ThemeProvider.tsx   # next-themes wrapper
 │   ├── ThemeToggler.tsx    # Dark/light mode toggle
 │   │
@@ -45,13 +51,14 @@ This is a **Next.js 14 personal portfolio website** for Salah-Eddine ET-TALEBY, 
 │   │   ├── badge.tsx       # Tag/badge component
 │   │   └── dialog.tsx      # Modal dialog (Radix UI)
 │   │
-│   └── magicui/            # Advanced animation components
-│       ├── border-beam.tsx # Animated border effect
-│       ├── dock.tsx        # Animated dock with mouse tracking
-│       └── particles.tsx   # Canvas particle system
+│   └── magicui/            # Advanced animation components (legacy)
+│       ├── border-beam.tsx
+│       ├── dock.tsx
+│       └── particles.tsx
 │
 ├── data/
-│   └── cardsData.ts        # Portfolio content (tabs, cards, badges)
+│   ├── portfolioData.ts    # Main portfolio content (profile, experiences, education, skills)
+│   └── cardsData.ts        # Legacy data file (kept for reference)
 │
 ├── lib/
 │   └── utils.ts            # cn() utility (clsx + tailwind-merge)
@@ -71,86 +78,138 @@ This is a **Next.js 14 personal portfolio website** for Salah-Eddine ET-TALEBY, 
 ```
 RootLayout (layout.tsx)
 ├── ThemeProvider
-├── Header
+├── Header (fixed, with scroll detection)
+│   ├── Logo
+│   ├── Navigation Links (desktop)
 │   ├── ThemeToggler
-│   └── Dialog (info modal)
+│   └── Mobile Menu
 ├── main (page.tsx)
-│   └── Tab (x4: About, Education, Work, Skills)
-│       └── Card (multiple per tab)
-│           └── Dialog (full description)
+│   ├── Hero
+│   │   ├── Animated background shapes
+│   │   ├── Name + Title + Subtitle
+│   │   ├── CTA Buttons
+│   │   └── Social Links
+│   ├── Section (Experience)
+│   │   └── ExperienceCard (x3)
+│   ├── Section (Education)
+│   │   └── EducationCard (x3)
+│   ├── Section (Skills)
+│   │   └── SkillCard (x4)
+│   └── Section (Contact)
+│       └── ContactSection
 └── Footer
+    ├── Logo + Copyright
+    ├── Social Links
+    └── Back-to-top Button
 ```
 
 ### Component Types
-- **Server Components** (default): `layout.tsx`, `page.tsx`, `Footer.tsx`, `Tab.tsx`
-- **Client Components** (`"use client"`): `Header.tsx`, `Card.tsx`, `ThemeProvider.tsx`, `ThemeToggler.tsx`, all `magicui/*` components
+- **Server Components**: `page.tsx`
+- **Client Components** (`"use client"`): `Header.tsx`, `Footer.tsx`, `Hero.tsx`, `Section.tsx`, `ExperienceCard.tsx`, `EducationCard.tsx`, `SkillCard.tsx`, `ContactSection.tsx`, `ThemeProvider.tsx`, `ThemeToggler.tsx`
 
 ## Data Architecture
 
-Portfolio content is defined in `data/cardsData.ts`:
+Portfolio content is defined in `data/portfolioData.ts`:
 
 ```typescript
-// Structure
-{
-  title: string,      // Tab name (e.g., "About Me")
-  id: string,         // Unique identifier
-  cards: [{
-    id: string,
-    title: string,
-    description: string,
-    fullDescription?: string,  // Shown in modal
-    badges?: string[]          // Technology tags
-  }]
-}
-```
+// Profile
+export const profile = {
+  name: string,
+  title: string,
+  subtitle: string,
+  email: string,
+  linkedin: string,
+  github?: string,
+  location: string,
+};
 
-**4 Tabs, 13 Total Cards:**
-- About Me: 3 cards (Profile, Contact, Location)
-- Education: 3 cards (degrees)
-- Work: 3 cards (positions)
-- Skills: 4 cards (Frontend, Backend, Testing, Other)
+// Experiences array
+export const experiences = [{
+  id: string,
+  title: string,
+  company: string,
+  location: string,
+  period: string,
+  description: string,
+  badges: string[],
+}];
+
+// Education array
+export const education = [{
+  id: string,
+  school: string,
+  degree: string,
+  location: string,
+  period: string,
+  description: string,
+  badges: string[],
+}];
+
+// Skills array
+export const skills = [{
+  id: string,
+  category: string,  // "Frontend", "Backend", "Databases", "DevOps & Tools"
+  description: string,
+  technologies: string[],
+  gradient: string,  // Tailwind gradient classes
+}];
+
+// Navigation links
+export const navLinks = [{ name: string, href: string }];
+```
 
 ## Development Commands
 
 ```bash
-npm run dev      # Start dev server at http://localhost:3000
-npm run build    # Production build
-npm start        # Start production server
-npm run lint     # Run ESLint (currently minimal config)
+npm install    # Install dependencies
+npm run dev    # Start dev server at http://localhost:3000
+npm run build  # Production build
+npm start      # Start production server
+npm run lint   # Run ESLint
 ```
 
 ## Coding Conventions
 
 ### File Naming
-- **Components**: PascalCase (`Header.tsx`, `Card.tsx`)
+- **Components**: PascalCase (`Header.tsx`, `SkillCard.tsx`)
 - **Utilities**: camelCase (`utilFunctions.ts`)
-- **Data files**: camelCase (`cardsData.ts`)
+- **Data files**: camelCase (`portfolioData.ts`)
 - **Config files**: lowercase (`tailwind.config.ts`)
 
 ### Styling Patterns
 - **Utility-first CSS** with Tailwind classes
+- **Glass morphism**: `glass` and `glass-card` utility classes in globals.css
 - **CVA (class-variance-authority)** for component variants
-- **cn() utility** for merging classes safely (prevents Tailwind conflicts)
+- **cn() utility** for merging classes safely
 - **CSS variables** for theme colors (HSL-based in `globals.css`)
 - **Dark mode**: class-based (`dark:` Tailwind prefix)
+- **Animations**: Custom keyframes in Tailwind config (`fade-in`, `slide-up`, `float`, etc.)
+
+### Custom CSS Utilities (globals.css)
+```css
+.text-gradient    /* Animated gradient text */
+.glass            /* Glass morphism background */
+.glass-card       /* Glass card with border */
+```
 
 ### TypeScript Patterns
 - Strict mode enabled
 - Interface-based component props
-- Type-safe forwardRef usage in UI components
+- Type-safe icon mapping in components
 
 ### React Patterns
 - Arrow function components
-- React hooks for local state (useState)
-- Context via next-themes for theme state
-- No external state management library needed
+- IntersectionObserver for scroll animations
+- useEffect for client-side logic
+- useState for local component state
 
 ## Theme System
 
 Theme is managed via `next-themes`:
-- Colors defined as CSS variables in `globals.css` (`:root` and `.dark`)
-- HSL format for flexibility
-- `ThemeToggler.tsx` handles switching with hydration safety
+- Colors defined as CSS variables in `globals.css`
+- Primary: Blue (`221 83% 53%`)
+- Accent: Purple (`262 83% 58%`)
+- Glass effects for both light and dark modes
 
 ## CI/CD Pipeline
 
@@ -162,23 +221,27 @@ Theme is managed via `next-themes`:
 
 ## Important Patterns for AI Assistants
 
-### When Adding New Cards
-1. Edit `data/cardsData.ts`
-2. Add card object to appropriate tab's `cards` array
-3. Include required fields: `id`, `title`, `description`
-4. Optional: `fullDescription`, `badges`
+### When Adding New Experiences/Education
+1. Edit `data/portfolioData.ts`
+2. Add new object to `experiences` or `education` array
+3. Follow the existing structure with all required fields
 
-### When Adding New Components
-1. Create in `/components` directory
-2. Use `"use client"` directive if using hooks/browser APIs
-3. Import `cn` from `@/lib/utils` for class merging
-4. Follow existing TypeScript interface patterns
+### When Adding New Skills
+1. Edit `data/portfolioData.ts`
+2. Add new skill object to `skills` array
+3. Update icon mapping in `components/SkillCard.tsx` if using a new category
+
+### When Adding New Sections
+1. Create a new component in `/components`
+2. Use `"use client"` directive
+3. Add to page.tsx wrapped in `<Section>` component
+4. Update `navLinks` in `portfolioData.ts`
 
 ### When Modifying Styles
 1. Prefer Tailwind utility classes
-2. For new theme colors, add CSS variables to `globals.css`
-3. Update both `:root` (light) and `.dark` selectors
-4. Reference in Tailwind config if needed for custom utilities
+2. For new animations, add keyframes to `tailwind.config.ts`
+3. For new utilities, add to `globals.css` under `@layer utilities`
+4. For theme colors, update CSS variables in both `:root` and `.dark`
 
 ### When Adding shadcn/ui Components
 1. Components live in `/components/ui/`
@@ -190,12 +253,16 @@ Theme is managed via `next-themes`:
 
 | Need to... | File |
 |------------|------|
-| Add/edit portfolio content | `data/cardsData.ts` |
+| Edit profile/contact info | `data/portfolioData.ts` |
+| Add work experience | `data/portfolioData.ts` → experiences |
+| Add education | `data/portfolioData.ts` → education |
+| Add skills | `data/portfolioData.ts` → skills |
 | Modify page layout | `app/page.tsx` |
 | Change theme colors | `app/globals.css` |
-| Add Tailwind config | `tailwind.config.ts` |
-| Modify header/footer | `components/Header.tsx`, `components/Footer.tsx` |
-| Edit card appearance | `components/Card.tsx` |
+| Add animations | `tailwind.config.ts` |
+| Modify header/navigation | `components/Header.tsx` |
+| Modify footer | `components/Footer.tsx` |
+| Edit hero section | `components/Hero.tsx` |
 
 ## Dependencies Overview
 
@@ -208,11 +275,11 @@ Theme is managed via `next-themes`:
 - `class-variance-authority`, `clsx`, `tailwind-merge` - Class utilities
 - `@radix-ui/*` - Accessible primitives
 - `lucide-react` - Icons
+- `tailwindcss-animate` - Animation utilities
 
 ### Features
 - `next-themes` - Dark mode
-- `framer-motion` - Animations
-- `tailwindcss-animate` - Animation utilities
+- `framer-motion` - Advanced animations (available but not actively used)
 
 ## Git Conventions
 
@@ -227,6 +294,7 @@ Commit messages use prefixes:
 - **Name**: Salah-Eddine ET-TALEBY
 - **Email**: salah.ettaleby@icloud.com
 - **LinkedIn**: https://www.linkedin.com/in/salah-ettaleby/
+- **Location**: Toulouse, France
 
 ---
 

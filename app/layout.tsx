@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Salah-Eddine's Portfolio",
+  title: "Salah-Eddine ET-TALEBY | Full-Stack Software Engineer",
   description:
-    "Created using Next.js, Tailwind CSS, shadcn/ui, MagicUI and more.",
+    "Portfolio of Salah-Eddine ET-TALEBY, a Full-Stack Software Engineer specializing in React, Next.js, Java Spring Boot, and modern web technologies.",
+  keywords: [
+    "Full-Stack Developer",
+    "Software Engineer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Java Spring Boot",
+    "Toulouse",
+    "France",
+  ],
 };
 
 export default function RootLayout({
@@ -19,11 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
-      <body
-        className={`${inter.className} bg-slate-100/50 dark:bg-slate-900/50`}
-      >
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           {children}
           <Footer />

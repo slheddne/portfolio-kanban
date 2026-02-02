@@ -1,81 +1,113 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Info } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ThemeToggler from "./ThemeToggler";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { navLinks } from "@/data/portfolioData";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavClick = (href: string) => {
+    setIsMobileMenuOpen(false);
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <header className="h-12 p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">S~E</h1>
-      <div className="flex space-x-4">
-        <ThemeToggler />
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "glass py-3 shadow-lg"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="container mx-auto px-4">
+        <nav className="flex items-center justify-between">
+          {/* Logo */}
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#home");
+            }}
+            className="text-2xl font-bold text-gradient"
+          >
+            S~E
+          </a>
 
-        {/* Bouton Info */}
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => setOpen(true)}
-          aria-label="Informations sur le projet"
-        >
-          <Info className="size-6" />
-        </Button>
-      </div>
-
-      {/* Pop-up Info */}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-[95%] max-w-md rounded-xl">
-          <DialogHeader>
-            <DialogTitle>About this project</DialogTitle>
-            <DialogDescription>
-              This portfolio was created by Salah-Eddine ET-TALEBY. It showcases
-              my skills in web development, UI/UX design, and modern
-              technologies such as React, TailwindCSS, and ShadCN UI.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="text-sm mt-4 space-y-2">
-            <p>
-              <strong>Project goal:</strong> An original portfolio showcasing my
-              profile and technical skills.
-            </p>
-            <p>
-              <strong>Tech stack:</strong> Next.js, TypeScript, TailwindCSS,
-              ShadCN UI.
-            </p>
-            <p>
-              <strong>Contact:</strong> salah.ettaleby@icloud.com
-            </p>
-            <p>
-              <strong>LinkedIn:</strong>{" "}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
               <a
-                href="https://www.linkedin.com/in/salah-ettaleby/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline hover:text-blue-800"
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
               >
-                linkedin.com/in/salah-ettaleby
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </a>
-            </p>
-            <p>
-              <strong>Version:</strong> 1.0.0
-            </p>
+            ))}
           </div>
 
-          <Button onClick={() => setOpen(false)} className="mt-6 w-full">
-            Close
-          </Button>
-        </DialogContent>
-      </Dialog>
+          {/* Actions */}
+          <div className="flex items-center gap-4">
+            <ThemeToggler />
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
+        </nav>
+
+        {/* Mobile Navigation */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            isMobileMenuOpen ? "max-h-96 mt-4" : "max-h-0"
+          }`}
+        >
+          <div className="glass-card rounded-xl p-4 space-y-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className="block py-3 px-4 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
